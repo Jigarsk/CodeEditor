@@ -1,46 +1,56 @@
 import React, { useEffect, useState } from "react";
 import "./App.css";
 import Editor from "./Components/Editor";
-import useLocalStorage from "./Components/useLocalStroage";
+import useLocalStorage from "./Components/useLocalStorage";
 
 function App() {
   const [html, setHtml] = useLocalStorage("html", "");
   const [css, setCss] = useLocalStorage("css", "");
   const [js, setJs] = useLocalStorage("js", "");
   const [srcDoc, setSrcDoc] = useState("");
+  const [isDarkMode, setIsDarkMode] = useState(false);
+
+  const toggleTheme = () => {
+    setIsDarkMode(prevMode => !prevMode);
+  };
+
   useEffect(() => {
     const timeout = setTimeout(() => {
       setSrcDoc(`
-    <html>
-      <body>${html}</body>
-      <style>${css}</style>
-      <script>${js}</script>
-    </html>
-  `);
+        <html>
+          <body>${html}</body>
+          <style>${css}</style>
+          <script>${js}</script>
+        </html>
+      `);
     }, 250);
     return () => clearTimeout(timeout);
   }, [html, css, js]);
 
   return (
-    <>
+    <div className={isDarkMode ? 'dark-mode' : ''}>
+      <button onClick={toggleTheme}>Toggle Theme</button>
       <div className="pane top-pane">
         <Editor
           language="xml"
           displayName="HTML"
           value={html}
           onChange={setHtml}
+          isDarkMode={isDarkMode}
         />
         <Editor
           language="css"
           displayName="CSS"
           value={css}
           onChange={setCss}
+          isDarkMode={isDarkMode}
         />
         <Editor
           language="javascript"
           displayName="JS"
           value={js}
           onChange={setJs}
+          isDarkMode={isDarkMode}
         />
       </div>
       <div className="pane">
@@ -53,7 +63,7 @@ function App() {
           height="100%"
         />
       </div>
-    </>
+    </div>
   );
 }
 

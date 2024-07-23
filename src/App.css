@@ -58,7 +58,17 @@ body {
   border-bottom-right-radius: 0.75rem;
   border-bottom-left-radius: 0.75rem;
 }
+:root {
+  --bg-color: #f0f4f8;
+  --editor-bg: #ffffff;
+  --text-color: #2d3748;
+}
 
+.dark-mode {
+  --bg-color: #1a202c;
+  --editor-bg: #2d3748;
+  --text-color: #f7fafc;
+}
 .editor-container.collapsed {
   flex-grow: 0;
 }
